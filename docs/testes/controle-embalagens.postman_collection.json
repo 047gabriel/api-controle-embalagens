@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "API Controle de Embalagens",
+    "description": "Requisições para os 15 endpoints de embalagens, máquinas e operadores.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "embalagemId", "value": "" },
+    { "key": "maquinaId", "value": "" },
+    { "key": "operadorId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Embalagens",
+      "item": [
+        {
+          "name": "Cadastrar embalagem",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"descricao\":\"Caixa de teste\",\"material\":\"Papelão\",\"capacidade\":25}" },
+            "url": "{{baseUrl}}/embalagens"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 201', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('embalagemId', pm.response.json().embalagem.id_embalagem);"] } }]
+        },
+        {
+          "name": "Listar embalagens",
+          "request": { "method": "GET", "url": "{{baseUrl}}/embalagens" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200 e uma lista', function () { pm.response.to.have.status(200); pm.expect(pm.response.json().embalagens).to.be.an('array'); });"] } }]
+        },
+        {
+          "name": "Buscar embalagem por ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/embalagens/{{embalagemId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Atualizar embalagem parcialmente",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"descricao\":\"Caixa atualizada\"}" },
+            "url": "{{baseUrl}}/embalagens/{{embalagemId}}"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Excluir embalagem",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/embalagens/{{embalagemId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Máquinas",
+      "item": [
+        {
+          "name": "Cadastrar máquina",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Seladora de teste\",\"patrimonio\":\"PAT-TESTE-01\",\"status\":\"ativa\"}" },
+            "url": "{{baseUrl}}/maquinas"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 201', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('maquinaId', pm.response.json().maquina.id_maquina);"] } }]
+        },
+        {
+          "name": "Listar máquinas",
+          "request": { "method": "GET", "url": "{{baseUrl}}/maquinas" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200 e uma lista', function () { pm.response.to.have.status(200); pm.expect(pm.response.json().maquinas).to.be.an('array'); });"] } }]
+        },
+        {
+          "name": "Buscar máquina por ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/maquinas/{{maquinaId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Atualizar máquina parcialmente",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"status\":\"em manutenção\"}" },
+            "url": "{{baseUrl}}/maquinas/{{maquinaId}}"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Excluir máquina",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/maquinas/{{maquinaId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Operadores",
+      "item": [
+        {
+          "name": "Cadastrar operador",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"nome\":\"Operador de teste\",\"matricula\":\"OP-TESTE-01\",\"turno\":\"manhã\"}" },
+            "url": "{{baseUrl}}/operadores"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 201', function () { pm.response.to.have.status(201); });", "pm.collectionVariables.set('operadorId', pm.response.json().operador.id_operador);"] } }]
+        },
+        {
+          "name": "Listar operadores",
+          "request": { "method": "GET", "url": "{{baseUrl}}/operadores" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200 e uma lista', function () { pm.response.to.have.status(200); pm.expect(pm.response.json().operadores).to.be.an('array'); });"] } }]
+        },
+        {
+          "name": "Buscar operador por ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/operadores/{{operadorId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Atualizar operador parcialmente",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"turno\":\"noite\"}" },
+            "url": "{{baseUrl}}/operadores/{{operadorId}}"
+          },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Excluir operador",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/operadores/{{operadorId}}" },
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('Retorna 200', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    }
+  ]
+}
+
